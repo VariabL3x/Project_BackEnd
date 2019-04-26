@@ -1,5 +1,5 @@
 from app import app
-import instagram_api
+import API
 
 
 if __name__ == '__main__':
