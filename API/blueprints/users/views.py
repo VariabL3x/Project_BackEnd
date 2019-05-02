@@ -74,8 +74,30 @@ def login():
 
     return result
 
+@users_api_blueprint.route('/edit', methods=['POST'])
+@jwt_required
+def edit():
+    received_data = request.form
+    target_user = User.get_or_none( User.id==received_data['user_id'] )
+
+    target_user.username = received_data['username']
+    
+
+    if (received_data['password'] != ''):
+        hashed_password = generate_password_hash(received_data['password'])
+        target_user.password = hashed_password
+
+    if target_user.save():
+        successfully_edited = True
+
+    result = jsonify({
+        'status' : successfully_edited,
+        'data' : target_user.as_dict()
+    })
+    return result
+
 ### EACH USER JSON
-@users_api_blueprint.route('/<id>', methods=['GET'])
+@users_api_blueprint.route('/<id>/show', methods=['GET'])
 def show(id):
     target_user_object = User.get_or_none(User.id == id)
     user_exists = (target_user_object != None)

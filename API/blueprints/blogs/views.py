@@ -50,11 +50,28 @@ def create():
 ### ONE BLOG
 @blogs_api_blueprint.route('/<id>',methods=["GET"])
 def show(id):
-    blog = Blog.get_or_none(Blog.id==id)
+    blog = Blog.get_or_none(Blog.title==id)
     blog_found = blog!=None
     result = jsonify({
         'status':blog_found,
         'data':blog.as_dict()
+    })
+
+    return result
+
+### DELETE BLOG
+@blogs_api_blueprint.route('/delete',methods=["POST"])
+@jwt_required
+def delete():
+    deletion_id = int(request.form['blog_id'])
+    Blog.delete().where(
+        Blog.id==deletion_id
+    ).execute()
+
+    successfully_deleted = Blog.get_or_none(Blog.id == deletion_id)
+
+    result = jsonify({
+        'status': successfully_deleted
     })
 
     return result
