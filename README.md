@@ -1,6 +1,7 @@
 ## Development
 
-**Make a fork before cloning**
+**Create conda environment**
+conda create -n `<your environment name>` python=3.7
 
 **Install dependencies**
 
