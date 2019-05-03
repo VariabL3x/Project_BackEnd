@@ -1,7 +1,8 @@
 ## Development
 
 **Create conda environment**
-conda create -n `<your environment name>` python=3.7
+conda create -n `<your environment name>` python=3.7<br>
+activate your environment run :`activate <your environment name>`
 
 **Install dependencies**
 
